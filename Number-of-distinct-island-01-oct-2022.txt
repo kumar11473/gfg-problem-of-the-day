@@ -1,0 +1,85 @@
+Given a boolean 2D matrix grid of size n * m. You have to find the number
+ of distinct islands where a group of connected 1s (horizontally or vertically) forms an island. 
+Two islands are considered to be distinct if and only if one island is not equal to another (not rotated or reflected).
+
+Link - https://practice.geeksforgeeks.org/problems/number-of-distinct-islands/1
+
+
+//{ Driver Code Starts
+// Initial Template for C++
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution {
+  public:
+  int dx[4]={0,0,-1,1};
+  int dy[4]={1,-1,0,0};
+ bool isValid(int i,int j,int n,int m,vector<vector<int>> &grid)
+  {
+      if(i<0 ||j<0 || i>=n || j>=m || grid[i][j]==0)
+        return false;
+    
+    return true;    
+  }
+  void island(int i,int j,int x,int y,int n,int m,vector<vector<int>> &grid,vector<pair<int,int>> & vp)
+  {
+      grid[i][j]=0;
+      vp.push_back({i-x,j-y});
+      for(int k=0;k<4;k++)
+      {
+          int nx=i+dx[k];
+          int ny=j+dy[k];
+          if(isValid(nx,ny,n,m,grid))
+          {
+              island(nx,ny,x,y,n,m,grid,vp);
+          }
+      }
+  }
+    int countDistinctIslands(vector<vector<int>>& grid) {
+        // code here
+     set<vector<pair<int,int>>> v;    
+     int n=grid.size();
+     int m=grid[0].size();
+     
+     for(int i=0;i<n;i++)
+     {
+         for(int j=0;j<m;j++)
+         {
+            if(grid[i][j]==1)
+            {
+                vector<pair<int,int>> vp;
+             island(i,j,i,j,n,m,grid,vp);   // second i,y are base cordinate (x,y)
+            v.insert(vp);
+            }
+         }
+     }
+     return v.size();
+    }
+};
+
+
+//{ Driver Code Starts.
+
+int main() {
+
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, m;
+        cin >> n >> m;
+        vector<vector<int>> grid(n, vector<int>(m));
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                cin >> grid[i][j];
+            }
+        }
+        Solution obj;
+        cout << obj.countDistinctIslands(grid) << endl;
+    }
+}
+// } Driver Code Ends
+
