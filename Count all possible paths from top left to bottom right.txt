@@ -1,0 +1,79 @@
+The task is to count all the possible paths from top left to bottom right of a m X n matrix with the constraints that from each cell you can either move only to right or down.
+
+link :- https://practice.geeksforgeeks.org/problems/count-all-possible-paths-from-top-left-to-bottom-right3011/1
+
+//{ Driver Code Starts
+// Initial Template for C++
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+class Solution {
+  public:
+  int mod=1e9+7;
+//   long long int path(int i,int j,vector<vector<long long int>> &dp)
+//   {
+//         if(i==0 && j==0)
+//             return 1;
+//         if(i<0 || j<0)
+//             return 0;
+        
+//         if(dp[i][j]!=-1)
+//             return dp[i][j];
+        
+//         long long int left=path(i,j-1,dp);
+//         long long int up=path(i-1,j,dp);
+        
+//         return dp[i][j]=(left+up)%mod;
+//   }
+
+                // tabulation
+  long long int pathTabulation(int m,int n)
+  {
+      
+        long long int dp[m][n];
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(i==0 && j==0)
+                    dp[i][j]=1;
+                else
+                {
+                    long long int up=0,left=0;
+                    if(i>0) left=dp[i-1][j];
+                    if(j>0) up=dp[i][j-1];
+                    dp[i][j]=(left+up)%mod;
+                }
+                
+            }
+        }
+       return dp[m-1][n-1];
+  }                
+                
+    long long int numberOfPaths(int m, int n){
+        // code here
+        if(m==1 || n==1)
+            return 1;
+      //  vector<vector<long long int>> dp(m,vector<long long int>(n,-1));
+        // path(m-1,n-1,dp);
+        // return dp[m-1][n-1];
+        return pathTabulation(m,n);
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, m;
+        cin >> m >> n;
+        Solution ob;
+        cout<<ob.numberOfPaths(m,n)<<endl;
+    }
+    return 0;
+}
+
+// } Driver Code Ends
