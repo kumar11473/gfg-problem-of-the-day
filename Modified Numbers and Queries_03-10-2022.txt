@@ -1,0 +1,72 @@
+Find the sum of all the numbers between the range l and r. Here each number is represented by the sum of its prime factors. 
+Note : For example, 6 is represented by 5 because 6 has two prime factors 2 and 3 and 2 + 3 = 5.
+
+link:- https://practice.geeksforgeeks.org/problems/modified-numbers-and-queries0904/1
+
+//{ Driver Code Starts
+//Initial Template for C++
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+//User function Template for C++
+class Solution {
+  public:
+  int func(int n){
+
+        if(n==1) return 1;
+
+        unordered_set<int>st;
+
+        for(int i=2;i*i<=n;i++){
+
+            while(n%i==0){
+
+                st.insert(i);
+
+                n=n/i;
+
+            }
+
+        }
+
+        if(n>1)
+
+        st.insert(n);
+
+        int sum = 0;
+
+        for(auto x : st)
+
+        sum+=x;
+
+        return sum;
+
+    }
+    int sumOfAll(int l, int r){
+        // code here
+        int ans=0;
+        for(int i=l;i<=r;i++)
+        {
+            ans+=func(i);
+            
+        }
+        return ans;
+        
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int l, r;
+        cin>>l>>r;
+        Solution ob;
+        cout<<ob.sumOfAll(l,r)<<endl;
+    }
+    return 0;
+}
+
+// } Driver Code Ends
