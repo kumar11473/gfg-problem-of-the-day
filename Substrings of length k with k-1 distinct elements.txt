@@ -1,0 +1,74 @@
+Given a String S and an integer K. Find the count of all substrings of length K which have exactly K-1 distinct characters.
+
+Link-> https://practice.geeksforgeeks.org/problems/substrings-of-length-k-with-k-1-distinct-elements/1
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function Template for C++
+
+class Solution {
+  public:
+    int countOfSubstrings(string S, int K) {
+        // code here
+        unordered_map<char,int> m;
+        unordered_map<char,int> ::iterator it;
+        int i=0,j=0;
+        int ans=0;
+        int n=S.length();
+        while(j<n)
+        {
+             m[S[j]]++;
+            if(j-i+1<K)
+            {
+               j++;
+                
+            }
+            else 
+            {
+                
+                if(m.size()==K-1)
+                    ans++;
+                
+                m[S[i]]--;
+                if(m[S[i]]==0)
+                {
+                    it=m.find(S[i]);
+                   // cout<<it.second<<" ";
+                    m.erase(it);
+                    
+                }
+                i++;
+                j++;
+                // for(auto it=m.begin();it!=m.end();it++)
+                // {
+                //     cout<<it->first<<" ";
+                // }
+                // cout<<"xx";
+            }
+            
+        }
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        string S;
+        int K;
+        cin>>S;
+        cin>>K;
+
+        Solution ob;
+        cout << ob.countOfSubstrings(S,K) << endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
