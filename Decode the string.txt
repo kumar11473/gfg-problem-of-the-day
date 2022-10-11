@@ -1,0 +1,90 @@
+An encoded string (s) is given, the task is to decode it.
+ The encoding pattern is that the occurance of the string is given
+ at the starting of the string and each string is enclosed by square brackets.
+
+example - Input: s = 3[b2[ca]]
+Output: bcacabcacabcaca
+Explaination: 2[ca] means 'ca' is repeated 
+twice which is 'caca' which concatenated with 
+'b' becomes 'bcaca'. This string repeated 
+thrice becomes the output.
+
+link-> https://practice.geeksforgeeks.org/problems/decode-the-string2444/1
+
+//{ Driver Code Starts
+// Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution{
+public:
+    string decodedString(string s){
+        // code here
+      int n=s.size();
+    string ans="";
+    stack<char>st;
+    for(int i=0;i<n;i++)
+    {
+        if(s[i]==']')
+        {
+            while(st.size()>0 && st.top()!='[')
+            {
+                ans=st.top()+ans;
+                st.pop();
+            }
+            if(st.size()!=0)
+            {
+                st.pop();
+            }
+            string num="";
+            while(st.size()>0 && st.top()>='0' && st.top()<='9')
+            {
+                num=st.top()+num;
+                st.pop();
+            }
+            int di=stoi(num);
+            string temp=ans;
+            for(int i=0;i<di-1;i++)
+            {
+                ans+=temp;
+                
+            }
+            for(int i=0;i<ans.size();i++)
+            {
+                st.push(ans[i]);
+            }
+            ans="";
+        }
+        else
+        {
+            st.push(s[i]);
+        }
+    }
+    while(st.size()>0)
+    {
+        ans=st.top()+ans;
+        st.pop();
+    }
+    return ans;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        string s;
+        cin>>s;
+        
+        Solution ob;
+        cout<<ob.decodedString(s)<<"\n";
+    }
+    return 0;
+}
+// } Driver Code Ends
