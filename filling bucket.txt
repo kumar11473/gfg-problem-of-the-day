@@ -1,0 +1,59 @@
+link-> https://practice.geeksforgeeks.org/problems/filling-bucket0529/1
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+  public:
+  int mod=1e8;
+//   int fill(int n, vector<int>&dp)
+//   {
+//       if(n<=2)
+//         return n;
+//     if(dp[n] != -1)
+//         return dp[n];
+        
+//     int o=fill(n-1,dp);
+//     int t=fill(n-2,dp);
+    
+//     return dp[n]=(o+t)%mod;
+//   }
+
+int fillTabulation(int n)
+{
+    vector<int> dp(n+1,0);
+    dp[1]=1;
+    dp[2]=2;
+    for(int i=3;i<=n;i++)
+    {
+        dp[i]=(dp[i-1]+dp[i-2])%mod;
+    }
+    return dp[n];
+}
+  
+    int fillingBucket(int N) {
+        // code here
+        // vector<int> dp(N+1,-1);
+        // return fill(N,dp);
+        
+        return fillTabulation(N);
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int N;
+        
+        cin>>N;
+
+        Solution ob;
+        cout << ob.fillingBucket(N) << endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
