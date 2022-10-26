@@ -1,0 +1,84 @@
+link-> https://practice.geeksforgeeks.org/problems/the-smurfs4201/1
+//{ Driver Code Starts
+// Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+
+class Solution{
+public:
+    char checker(char a,char b)
+    {
+        if((a=='R' && b=='G')|| (a=='G' && b=='R'))
+            return 'B';
+        else if((a=='B' && b=='R')|| (a=='R' && b=='B'))
+            return 'G';
+        else if((a=='G' && b=='B')|| (a=='B' && b=='G'))
+            return 'R';
+            
+    }
+    int findMin(int n, char a[]){
+        // code here
+        // stack<char> st;
+        // for(int i =0;i<n;i++)
+        // {
+        //     if(st.empty())
+        //         st.push(a[i]);
+        //     else if(st.top() == a[i])
+        //         st.push(a[i]);
+        //     else
+        //     {
+        //         st.push(a[i]);
+        //         while(st.size()>=2)
+        //         {
+        //             char x=st.top(); st.pop();
+        //             char y=st.top(); st.pop();
+        //             if(x==y)
+        //             {
+        //                 st.push(x);
+        //                 st.push(y);
+        //                 break;
+        //             }
+        //             char z=checker(x,y);
+        //             st.push(z);
+        //         }
+        //     }
+        // }
+
+        // return st.size();
+        // above code give wrong ans at  R G B B or B B B G R G R R G R G G G B B
+        
+         int r=0, g=0, b=0;
+        for(int i=0; i<n; i++){
+            if(a[i] == 'R')r++;
+            if(a[i] == 'G')g++;
+            if(a[i] == 'B')b++;
+        }
+        if((r%2 == g%2) && (g%2 == b%2)) return 2;
+        return 1;
+        
+    }
+};
+
+
+//{ Driver Code Starts.
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+        int n;
+        cin>>n;
+        char a[n];
+        for(int i = 0;i < n;i++)
+            cin>>a[i];
+        
+        Solution ob;
+        cout<<ob.findMin(n, a)<<"\n";
+    }
+    return 0;
+}
+// } Driver Code Ends
