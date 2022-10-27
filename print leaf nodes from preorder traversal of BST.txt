@@ -1,0 +1,67 @@
+link-> https://practice.geeksforgeeks.org/problems/print-leaf-nodes-from-preorder-traversal-of-bst2657/1
+//{ Driver Code Starts
+//Initial Template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function Template for C++
+class Solution {
+  public:
+    vector<int> leafNodes(int arr[],int N) {
+        // code here
+        stack<int> st;
+        vector<int> ans;
+        for(int i=0;i<N;i++)
+        {
+            int t=-1 ,c=0;
+            while((!st.empty()) && (arr[i]>st.top()))
+            {
+                if(t==-1)
+                    t=st.top();
+                
+                st.pop();
+                c++;
+            }
+            if(c>=2)
+                ans.push_back(t);
+            st.push(arr[i]);    
+        }
+        ans.push_back(st.top());
+        return ans;
+    }
+};
+
+// Using Stack:
+
+// Intuition/approach: 
+
+// just push the elements of array one by one in to the stack ,
+// but take care the following conditions:
+// -->if arr[i]  > s[top], then store the top in temp variable and pop unitil you gets arr[i] < s[top] 
+// (reason behind this is : when you gets arr[i] which is greater than top element that means 
+// arr[i] will be a right child of the node,
+// and there is a possiblity that top will be leaf node) 
+//--> store the temp in vector only when you pop >=2 elements.                                                                                                                   
+//(reason behind this is : if you pop only one elements that should be its parent node surely, not leaf node.  for better understanding of this case just dry run on 2-3 sample test cases)
+
+//{ Driver Code Starts.
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int N;
+        cin >> N;
+        int arr[N];
+        for(int i=0;i<N;i++)cin>>arr[i];
+        Solution ob;
+        vector<int>ans=ob.leafNodes(arr,N);
+        for(int i=0;i<ans.size();i++)cout<<ans[i]<<" ";
+        cout<<endl;
+    }
+    return 0;
+}
+// } Driver Code Ends
