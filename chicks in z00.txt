@@ -1,0 +1,49 @@
+link-> https://practice.geeksforgeeks.org/problems/chicks-in-a-zoo1159/1
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+public:
+
+	long long int NoOfChicks(int n){
+	    // Code here
+ long long int dp[n + 1];
+
+     dp[0] = 0;
+
+     dp[1] = 1;
+
+     int complete = 0;
+
+     long long int total = 1;
+
+     for(int i = 2; i <= n; i++)
+     {
+         if(i >5) total -= dp[complete++];
+
+         dp[i] = total * 2; // storing how many chicks take birth on ith day
+
+         total += dp[i];
+
+     }
+
+     return total;
+	}
+};
+
+//{ Driver Code Starts.
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		int N;
+		cin >> N;
+		Solution obj;
+		long long int ans = obj.NoOfChicks(N);
+		cout << ans <<"\n";
+	}
+	return 0;
+}
+// } Driver Code Ends
