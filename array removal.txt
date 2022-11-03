@@ -1,0 +1,104 @@
+link -> https://practice.geeksforgeeks.org/problems/array-removals/1?utm_source=gfg&utm_medium=article&utm_campaign=bottom_sticky_on_article
+//{ Driver Code Starts
+//Initial Template for C++
+
+#include<bits/stdc++.h>
+using namespace std;
+
+
+// } Driver Code Ends
+//User function Template for C++
+
+class Solution{
+    public:
+    #define MAX 100
+int dp[MAX][MAX];
+ 
+// function to check all possible combinations
+// of removal and return the minimum one
+int countRemovals(vector<int> a, int i, int j, int k)
+{
+    // base case when all elements are removed
+    if (i >= j)
+        return 0;
+ 
+    // if condition is satisfied, no more
+    // removals are required
+    else if ((a[j] - a[i]) <= k)
+        return 0;
+ 
+    // if the state has already been visited
+    else if (dp[i][j] != -1)
+        return dp[i][j];
+ 
+    // when Amax-Amin>d
+    else if ((a[j] - a[i]) > k) {
+ 
+        // minimum is taken of the removal
+        // of minimum element or removal
+        // of the maximum element
+        dp[i][j] = 1 + min(countRemovals(a, i + 1, j, k),
+                           countRemovals(a, i, j - 1, k));
+    }
+    return dp[i][j];
+}
+ 
+
+    int removals(vector<int>& arr, int k){
+        //Code here
+     int n=arr.size(); 
+      sort(arr.begin(), arr.end());
+ 
+    // memset(dp, -1, sizeof(dp));
+    // if (n == 1)
+    //     return 0;
+    // else
+    //     return countRemovals(arr, 0, n - 1, k);
+    // }
+    
+
+    int diff= 0; // to store difference of max(a) and min(a)
+    int ans = 0; // to store maximum length of array with length <=k
+ 
+    // use sliding window to iterate array, maintaining two
+    // pointers for desired subarray
+    // which starting from index j and ending with index i
+    for (int i = 0, j = 0; i < n; i++) {
+        int diff = arr[i] - arr[j];
+        // as array is already sorted, if difference exceeds
+        // k we will move starting pointer forward
+        while (i >= j && diff > k) {
+            diff = arr[i] - arr[++j];
+        }
+        ans = max(ans, i - j + 1);
+    }
+    return n - ans;
+    }
+};
+
+
+//{ Driver Code Starts.
+
+
+int main(){
+    int t;
+    cin>>t;
+    
+    while(t--){
+        int n,k;
+        cin>>n>>k;
+        vector<int> arr(n);
+        for(int i=0;i<n;i++){
+            cin>>arr[i];
+        }
+        
+        Solution ob;
+        int ans = ob.removals(arr,k);
+        
+        cout<<ans<<endl;
+    }
+}
+
+
+
+// } Driver Code Ends
