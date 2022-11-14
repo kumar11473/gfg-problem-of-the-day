@@ -1,0 +1,60 @@
+link-> https://practice.geeksforgeeks.org/problems/find-patterns0606/1
+
+//{ Driver Code Starts
+//Initial template for C++
+
+#include<bits/stdc++.h> 
+using namespace std; 
+
+// } Driver Code Ends
+//User function template for C++
+
+class Solution{   
+public:
+    int numberOfSubsequences(string S, string W){
+        // code here 
+        int n=S.size();
+        int m=W.size();
+        int ans=0;
+        int i=0,j=0;
+        while(i<n)
+        {
+            if(S[i]==W[j])
+            {
+                j++;
+                S[i]='.';
+            }
+              i++;   
+            if(j==m)
+            {
+               // cout<<i<<endl;
+                ans++;
+                j=0;
+                i=0;
+            }
+           
+            if(i>n-1)
+                break;
+        }
+        //cout<<S<<endl;
+        return ans;
+    }
+};
+
+//{ Driver Code Starts.
+int main() 
+{ 
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        string S,W;
+        cin >> S >> W;
+        Solution ob;
+        cout << ob.numberOfSubsequences(S,W) << endl;
+    }
+    return 0; 
+} 
+
+
+// } Driver Code Ends
