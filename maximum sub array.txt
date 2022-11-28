@@ -1,0 +1,104 @@
+link-> https://practice.geeksforgeeks.org/problems/maximum-sub-array5443/1
+
+//{ Driver Code Starts
+#include <bits/stdc++.h>
+
+using namespace std;
+
+// } Driver Code Ends
+//User function template for C++
+class Solution{
+public:
+	vector<int> findSubarray(int a[], int n) {
+	    // code here
+	    vector<int> curr,prev;
+	    vector<int> neg(1,-1);
+	   // cout<<curr.size();
+	    int mx=0, ans=0;
+	    for(int i=0;i<n;i++)
+	    {
+	        if((a[i]<0) )  // && (!prev.empty())   && (curr.size()>0) 
+	        {
+	            if(ans>mx)
+	            {
+	                mx=ans;
+	               
+	                prev=curr;
+	                curr.clear();
+	            }
+	            else if(ans==mx)
+	            {
+	                if(curr.size()==prev.size())
+	                {
+	                     mx=ans;
+        	           //ans=0;
+        	                prev=curr;
+        	                //curr.clear();
+	                    
+	                }
+	                else if(curr.size()> prev.size())
+	                {
+	                    mx=ans;
+	                   
+	                    prev=curr;
+	                    
+	                }
+	            }
+	             ans=0;
+	            curr.clear();
+	        }
+	        else if(a[i]>=0)
+	        {
+	            ans+=a[i];// cout<<a[i]<<" ";
+	            curr.push_back(a[i]);
+	            
+	        }
+	    }
+	    
+	    if((prev.size()==0 ) && (curr.size()==0))
+	        return neg;
+	    if(ans>mx)
+	    {
+	           return curr;
+	    }
+        else if(ans==mx)
+	   {
+	        if(curr.size()==prev.size())
+	       {
+	              return prev;      
+	       }
+	       else if(curr.size()> prev.size())
+	              return curr;
+	                    
+	   }
+	    return prev;
+	}
+};
+
+//{ Driver Code Starts.
+
+void printAns(vector<int> &ans) {
+    for (auto &x : ans) {
+        cout << x << " ";
+    }
+    cout << "\n";
+}
+
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        int n, i;
+        cin >> n;
+        int a[n];
+        for (i = 0; i < n; i++) {
+            cin >> a[i];
+        }
+        Solution ob;
+        auto ans = ob.findSubarray(a, n);
+        printAns(ans);
+    }
+    return 0;
+}
+
+// } Driver Code Ends
