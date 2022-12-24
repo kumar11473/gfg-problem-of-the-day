@@ -1,0 +1,143 @@
+link-> https://practice.geeksforgeeks.org/problems/missing-number-in-matrix5316/1
+//{ Driver Code Starts
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+class Solution {
+public:
+    long long int MissingNo(vector<vector<int> >& mat) {
+        // Code here
+        
+          long long int n=mat[0].size();
+        vector<vector<long long int>> matrix(n,vector<long long int>(n,0));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                matrix[i][j]=(long long int)mat[i][j];
+            }
+        }
+        
+          long long int a=0,b=0;
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(matrix[i][j]==0)
+                {
+                    a=i ,b=j;
+                    break;
+                }
+            }
+        }
+        
+        long long int temp1=0,temp2=0;
+        for(int i=0;i<n;i++)
+            {
+                if(a==0)
+                {
+                    temp1+=matrix[a][i];
+                    temp2+=matrix[a+1][i];                
+                }else if(a<=n-1)
+                {
+                    temp1+=matrix[a][i];
+                    temp2+=matrix[a-1][i];
+                }
+    
+            }
+         matrix[a][b]=abs(temp1-temp2);
+   
+        
+        vector<long long int> rows(n,0),columns(n,0);
+        long long int diag1=0,diag2=0;
+                // finding sum row wise 
+        for(int i=0;i<n;i++) 
+        {
+            long long int sum=0;
+            for(int j=0;j<n;j++)
+            {
+                sum+=matrix[i][j];
+                if(i==j)
+                    diag1+=matrix[i][j];
+                 if(i+j == n-1)
+                    diag2+=matrix[i][j];
+            }
+            rows[i]=sum;
+        }
+        
+        // finding sum coumn wise
+        for(int i=0;i<n;i++)
+        {
+              long long int sum=0;
+            for(int j=0;j<n;j++)
+            {
+                sum+=matrix[j][i];
+                
+            }
+            columns[i]=sum;
+        }
+        if(diag1!=diag2)
+            return -1;
+        for(int i=0;i<n-1;i++)
+        {
+            if(rows[i]!=rows[i+1])
+                return -1;
+            if(columns[i]!=columns[i+1])
+                return -1;
+        }
+        
+        long long int ans=matrix[a][b];
+        if(ans==0)
+            return -1;
+        return ans; 
+    }
+};
+
+/*
+3
+4 0 2
+3 5 7
+8 1 6
+
+3
+3 8 1
+2 4 6
+7 0 5
+
+
+7
+25 10 10 25 10 10 25
+10 25 10 25 10 25 10
+10 10 25 25 25 10 10
+10 10 25 25 25 10 10
+10 25 10 25 10 25 10
+25 10 10 25 10 10 25
+25 25 25 0 25 25 25
+
+3
+61 0 41
+11 31 51
+21 71 1
+*/
+
+//{ Driver Code Starts.
+int main(){
+	int tc;
+	cin >> tc;
+	while(tc--){
+		int n;
+		cin >> n;
+		vector<vector<int>> matrix(n, vector<int>(n,0));
+		for(int i = 0; i < n; i++){
+			for(int j = 0; j < n; j++){
+				cin >> matrix[i][j];
+			}
+		}
+		Solution ob;
+		long long int ans = ob.MissingNo(matrix);
+		cout << ans <<"\n";
+	}
+	return 0;
+}
+// } Driver Code Ends
