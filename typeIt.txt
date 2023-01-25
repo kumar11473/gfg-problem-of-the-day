@@ -1,0 +1,60 @@
+link->  https://practice.geeksforgeeks.org/problems/95080eb9efbf7cc5cb4851ddf8d7946e3f212a49/1
+
+//{ Driver Code Starts
+// Initial template for C++
+
+#include <bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+// User function template for C++
+
+class Solution {
+  public:
+    int minOperation(string s) {
+        // code here
+        int n=s.size();
+    
+        int count=0;
+        int an=0;
+        for(int j=2;j<n;j++)
+        {
+            
+            for(int i=0,k=j;i<j;i++,k++)
+            {
+                if(s[i]==s[k])
+                    count++;
+                else
+                {
+                    an=max(an,count);
+                    break;
+                }
+                
+            }
+            an=max(an,count);
+            count=0; 
+            
+        }
+       
+        //cout<<an<<" ";
+        if(an==0)
+            return n;
+        return n-an+1;
+    }
+};
+
+//{ Driver Code Starts.
+int main() {
+    int t;
+    cin >> t;
+    while (t--) {
+        string s;
+        cin >> s;
+        Solution ob;
+        cout << ob.minOperation(s) << "\n";
+    }
+    return 0;
+}
+
+// } Driver Code Ends
+
