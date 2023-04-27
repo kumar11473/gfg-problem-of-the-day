@@ -1,2 +1,0 @@
-spread (...) is used to spread/expend objects and array.
-rest is used in a function's argument.
